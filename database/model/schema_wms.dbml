@@ -67,6 +67,7 @@ Table tipos_localizadores {
 Tipos de Localizadores:
 1 - Pallet
 2 - Picking
+3 - Área de Recebimento
 */
 
 /*=================================================================
@@ -100,6 +101,12 @@ Table tipos_movimentacoes {
 Tipos de Movimentações:
 1 - Entrada
 2 - Saída
+3 - Separação
+4 - Inventário
+5 - Transferência
+6 - Devolução
+7 - Expedição
+8 - Recebimento
 */
 
 /*===============================================================
@@ -180,6 +187,16 @@ Table itens_recebimentos {
   quantidade int
 } //-> Tabela de itens dos recebimentos
 
+Table area_de_recebimento {
+  id int [pk, increment]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+  localizador_id int [ref: > localizadores.id] // Localizador área de recebimento
+} //-> Tabela de áreas de recebimento
+/*
+Os produtos recebidos são alocados temporariamente em localizadores específicos da área de recebimento antes de serem alocados em seus localizadores definitivos.
+*/
+
 /*===============================================================
 Alocação de Produtos em Localizadores para produtos do recebimento
 ===============================================================*/
@@ -196,6 +213,41 @@ Table movimentacoes_alocacoes {
   alocacao_id int [ref: > alocacoes.id]
   movimentacao_id int [ref: > movimentacoes.id]
 } //-> Tabela de movimentações relacionadas às alocações
+
+/*===============================================================
+Tabelas de Expedição
+===============================================================*/
+Table expedicoes {
+  id int [pk, increment]
+  data_expedicao datetime
+  pedido_id int [ref: > pedidos_saida.id]
+  status_expedicao_id int [ref: > status_expedicoes.id]
+} //-> Tabela de expedições
+
+Table status_expedicoes {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status das expedições
+/*
+Tipos de Status das Expedições:
+1 - Pendente
+2 - Em Processamento
+3 - Concluído
+4 - Cancelado 
+*/
+
+Table itens_expedicoes {
+  id int [pk, increment]
+  expedicao_id int [ref: > expedicoes.id]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+} //-> Tabela de itens das expedições
+
+Table movimentacoes_expedicoes {
+  id int [pk, increment]
+  expedicao_id int [ref: > expedicoes.id]
+  movimentacao_id int [ref: > movimentacoes.id]
+} //-> Tabela de movimentações relacionadas às expedições
 
 /*===============================================================
 Tabelas de Inventário
@@ -225,3 +277,9 @@ Table itens_inventarios {
   localizador_id int [ref: > localizadores.id]
   quantidade_contada int
 } //-> Tabela de itens dos inventários
+
+Table movimentacoes_inventarios {
+  id int [pk, increment]
+  inventario_id int [ref: > inventarios.id]
+  movimentacao_id int [ref: > movimentacoes.id]
+}

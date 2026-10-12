@@ -10,134 +10,140 @@
       {
         "name": "produtos",
         "schemaName": "public",
-        "x": 758.0055370583693,
-        "y": -181.3636362332128
+        "x": 1829.5690491630278,
+        "y": 980.6432606369796
       },
       {
         "name": "categorias",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": -5.06631025484387
+        "x": 2154.156663376926,
+        "y": 998.533658350997
       },
       {
         "name": "status",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 122.93368974515613
+        "x": 2154.156663376926,
+        "y": 1122.0077461148724
       },
       {
         "name": "localizadores",
         "schemaName": "public",
-        "x": 1131.528527389105,
-        "y": -417.2118021014833
+        "x": 2151.044048778333,
+        "y": 747.0580508867698
       },
       {
         "name": "tipos_localizadores",
         "schemaName": "public",
-        "x": 1386.2147205027286,
-        "y": -417.2118021014833
+        "x": 2401.204329655833,
+        "y": 747.0580508867698
       },
       {
         "name": "estoque",
         "schemaName": "public",
-        "x": 757.8954296364943,
-        "y": -417.2118021014833
+        "x": 1568.3757597751278,
+        "y": 1059.140400948293
       },
       {
         "name": "movimentacoes",
         "schemaName": "public",
-        "x": 752.6363964333693,
-        "y": 122.71266404814696
+        "x": 1568.4858671970028,
+        "y": 1305.0861659808988
       },
       {
         "name": "tipos_movimentacoes",
         "schemaName": "public",
-        "x": 1107.4276395207826,
-        "y": 122.71266404814696
+        "x": 1844.07364615224,
+        "y": 1305.0861659808988
       },
       {
         "name": "status_pedidos",
         "schemaName": "public",
-        "x": 758.0055370583693,
-        "y": -747.8687625094785
+        "x": 1334.3463159154308,
+        "y": 441.04285418813436
       },
       {
         "name": "itens_pedidos",
         "schemaName": "public",
-        "x": 1074.7208390981282,
-        "y": -747.8687625094785
+        "x": 1836.2593630282695,
+        "y": 443.5565638955211
       },
       {
         "name": "pedidos_saida",
         "schemaName": "public",
-        "x": 758.0055370583693,
-        "y": -606.1941885381765
+        "x": 1540.5597732168753,
+        "y": 585.5028864967215
       },
       {
         "name": "movimentacoes_pedidos",
         "schemaName": "public",
-        "x": 1416.564862904775,
-        "y": -619.2431624565859
+        "x": 1537.351587572709,
+        "y": 443.5565638955211
       },
       {
         "name": "entidades",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 578.3523332379816
+        "x": 1073.9141900797722,
+        "y": 801.7537863793652
       },
       {
         "name": "tipos_entidades",
         "schemaName": "public",
-        "x": 786.0962019405322,
-        "y": 396.71266404814696
+        "x": 1073.9141900797722,
+        "y": 688.9984823405126
       },
       {
         "name": "recebimentos",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 756.3523332379816
+        "x": 800.2384690745212,
+        "y": 1058.0077461148724
       },
       {
         "name": "status_recebimentos",
         "schemaName": "public",
-        "x": 825.8198347530322,
-        "y": 574.712664048147
+        "x": 800.2384690745212,
+        "y": 945.1915454848698
       },
       {
         "name": "itens_recebimentos",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 966.3523332379816
+        "x": 800.6754807932712,
+        "y": 1236.2972763462444
       },
       {
         "name": "alocacoes",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 1176.3523332379816
+        "x": 1135.3515968360532,
+        "y": 1377.4129111952618
       },
       {
         "name": "movimentacoes_alocacoes",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 1418.3523332379816
+        "x": 1140.9368156320784,
+        "y": 1209.8301994867215
       },
       {
         "name": "inventarios",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 1596.3523332379816
+        "x": 2577.427260361635,
+        "y": 1414.7460700247063
       },
       {
         "name": "status_inventarios",
         "schemaName": "public",
-        "x": 650.2707298153105,
-        "y": 1596.3523332379816
+        "x": 2154.156663376926,
+        "y": 1294.8093957674112
       },
       {
         "name": "itens_inventarios",
         "schemaName": "public",
-        "x": 365.2360618465604,
-        "y": 1774.3523332379816
+        "x": 2158.780378520133,
+        "y": 1418.4984489339192
+      },
+      {
+        "name": "movimentacoes_inventarios",
+        "schemaName": "public",
+        "x": 2158.780378520133,
+        "y": 1639.459034452144
       }
     ],
     "tableGroupCollapseStates": [],
@@ -589,6 +595,36 @@
           "localizador_id"
         ],
         "secondTableName": "itens_inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "inventarios",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "inventario_id"
+        ],
+        "secondTableName": "movimentacoes_inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "movimentacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "movimentacao_id"
+        ],
+        "secondTableName": "movimentacoes_inventarios",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
