@@ -140,7 +140,6 @@ ALTER TABLE erp.contas_pagar ADD CONSTRAINT fk_erp_contas_pagar_pedido_compra_id
 ALTER TABLE erp.parcelas_receber ADD CONSTRAINT fk_erp_parcelas_receber_conta_receber_id FOREIGN KEY (conta_receber_id) REFERENCES erp.contas_receber(id);
 ALTER TABLE erp.parcelas_pagar ADD CONSTRAINT fk_erp_parcelas_pagar_conta_pagar_id FOREIGN KEY (conta_pagar_id) REFERENCES erp.contas_pagar(id);
 
--- Restrições de unicidade e integridade adicionais
 ALTER TABLE erp.parcelas_condicoes_pagamento ADD CONSTRAINT uq_erp_condicao_numero_parcela UNIQUE (condicao_pagamento_id, numero_parcela);
 ALTER TABLE erp.itens_tabelas_preco ADD CONSTRAINT uq_erp_tabela_preco_produto UNIQUE (tabela_id, produto_id);
 ALTER TABLE erp.parcelas_receber ADD CONSTRAINT uq_erp_parcela_receber_numero UNIQUE (conta_receber_id, numero_parcela);

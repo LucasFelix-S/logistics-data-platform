@@ -342,7 +342,6 @@ ALTER TABLE wms.itens_inventarios ADD CONSTRAINT fk_wms_itens_inventarios_locali
 ALTER TABLE wms.movimentacoes_inventarios ADD CONSTRAINT fk_wms_movimentacoes_inventarios_inventario_id FOREIGN KEY (inventario_id) REFERENCES wms.inventarios(id);
 ALTER TABLE wms.movimentacoes_inventarios ADD CONSTRAINT fk_wms_movimentacoes_inventarios_movimentacao_id FOREIGN KEY (movimentacao_id) REFERENCES wms.movimentacoes(id);
 
--- Restrições de unicidade e integridade adicionais
 ALTER TABLE erp.parcelas_condicoes_pagamento ADD CONSTRAINT uq_erp_condicao_numero_parcela UNIQUE (condicao_pagamento_id, numero_parcela);
 ALTER TABLE erp.itens_tabelas_preco ADD CONSTRAINT uq_erp_tabela_preco_produto UNIQUE (tabela_id, produto_id);
 ALTER TABLE erp.parcelas_receber ADD CONSTRAINT uq_erp_parcela_receber_numero UNIQUE (conta_receber_id, numero_parcela);
@@ -387,7 +386,6 @@ ALTER TABLE wms.itens_expedicoes ADD CONSTRAINT ck_wms_expedicao_qtd_confirmada 
 ALTER TABLE wms.itens_inventarios ADD CONSTRAINT ck_wms_inventario_qtd_congelada CHECK (quantidade_congelada >= 0);
 ALTER TABLE wms.itens_inventarios ADD CONSTRAINT ck_wms_inventario_qtd_contada CHECK (quantidade_contada >= 0);
 
--- Integração ERP -> WMS: pedido operacional referencia o pedido comercial original.
 ALTER TABLE wms.pedidos_saida ADD CONSTRAINT fk_wms_pedido_saida_pedido_venda_erp FOREIGN KEY (pedido_venda_erp_id) REFERENCES erp.pedidos_venda(id);
 
 ALTER TABLE wms.pedidos_saida

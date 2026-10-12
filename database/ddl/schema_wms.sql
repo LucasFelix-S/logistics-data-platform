@@ -203,8 +203,6 @@ ALTER TABLE wms.itens_inventarios ADD CONSTRAINT fk_wms_itens_inventarios_locali
 ALTER TABLE wms.movimentacoes_inventarios ADD CONSTRAINT fk_wms_movimentacoes_inventarios_inventario_id FOREIGN KEY (inventario_id) REFERENCES wms.inventarios(id);
 ALTER TABLE wms.movimentacoes_inventarios ADD CONSTRAINT fk_wms_movimentacoes_inventarios_movimentacao_id FOREIGN KEY (movimentacao_id) REFERENCES wms.movimentacoes(id);
 
-
--- Restrições de unicidade e integridade adicionais
 ALTER TABLE wms.estoque ADD CONSTRAINT uq_wms_estoque_produto_local_lote UNIQUE (produto_id, localizador_id, lote);
 ALTER TABLE wms.itens_pedidos ADD CONSTRAINT uq_wms_pedido_produto UNIQUE (pedido_id, produto_id);
 ALTER TABLE wms.movimentacoes_pedidos ADD CONSTRAINT uq_wms_mov_pedido UNIQUE (pedido_id, movimentacao_id);
@@ -226,7 +224,4 @@ ALTER TABLE wms.itens_expedicoes ADD CONSTRAINT ck_wms_expedicao_qtd_confirmada 
 ALTER TABLE wms.itens_inventarios ADD CONSTRAINT ck_wms_inventario_qtd_congelada CHECK (quantidade_congelada >= 0);
 ALTER TABLE wms.itens_inventarios ADD CONSTRAINT ck_wms_inventario_qtd_contada CHECK (quantidade_contada >= 0);
 
--- Requer que o schema ERP e erp.pedidos_venda já existam.
-
--- Requer que o schema ERP e erp.pedidos_venda já existam.
 ALTER TABLE wms.pedidos_saida ADD CONSTRAINT fk_wms_pedido_saida_pedido_venda_erp FOREIGN KEY (pedido_venda_erp_id) REFERENCES erp.pedidos_venda(id);
