@@ -46,7 +46,7 @@
       {
         "name": "movimentacoes",
         "schemaName": "public",
-        "x": 1568.4858671970028,
+        "x": 1527.418793479669,
         "y": 1305.0861659808988
       },
       {
@@ -58,8 +58,8 @@
       {
         "name": "status_pedidos",
         "schemaName": "public",
-        "x": 1334.3463159154308,
-        "y": 441.04285418813436
+        "x": 1223.4652168786301,
+        "y": 449.2562689316011
       },
       {
         "name": "itens_pedidos",
@@ -142,8 +142,8 @@
       {
         "name": "movimentacoes_inventarios",
         "schemaName": "public",
-        "x": 2158.780378520133,
-        "y": 1639.459034452144
+        "x": 2171.1005006353334,
+        "y": 1740.073365059611
       },
       {
         "name": "expedicoes",
@@ -166,8 +166,8 @@
       {
         "name": "movimentacoes_expedicoes",
         "schemaName": "public",
-        "x": 1559.1544846995212,
-        "y": 1817.459034452144
+        "x": 1635.128571076588,
+        "y": 1813.3523270804103
       }
     ],
     "tableGroupCollapseStates": [],

@@ -8,17 +8,17 @@
 ===============================================================*/
 Table produtos {
   codigo int [pk, increment]
-  descricao varchar
-  unidade_medida char(2)
+  descricao varchar [not null]
+  unidade_medida char(2) [not null]
   estoque_minimo int
   estoque_maximo int
-  categoria_id int [ref: > categorias.id]
+  categoria_id int [ref: > categorias.id] 
   status_id int [ref: > status.id]
 } //-> Tabela cadastral dos produtos
 
 Table categorias {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de categorias dos produtos
 /*
 Tipos de categoria:
@@ -36,7 +36,7 @@ Tipos de categoria:
 
 Table status {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de status dos produtos
 /*
 Tipos de Status:
@@ -47,22 +47,30 @@ Tipos de Status:
 
 Table condicoes_pagamento {
   id int [pk, increment]
-  descricao varchar
-  prazo int
+  descricao varchar [not null]
+  prazo int [not null]
 } //-> Tabela de condições de pagamento
+
+Table parcelas_condicoes_pagamento {
+  id int [pk, increment]
+  condicao_pagamento_id int [ref: > condicoes_pagamento.id]
+  numero_parcela int [not null]
+  prazo_dias int
+  percentual decimal(5,2)
+} //-> Tabela de parcelas das condições de pagamento
 
 /*===============================================================
 Tabelas de Entidades
 ===============================================================*/
 Table entidades {
   id int [pk, increment]
-  nome varchar
+  nome varchar [not null]
   tipo_entidade_id int [ref: > tipos_entidades.id]
 } //-> Tabela de entidades (clientes, fornecedores, transportadoras)
 
 Table tipos_entidades {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de tipos de entidades
 /*
 Tipos de Entidades:
@@ -77,24 +85,24 @@ Tabelas de Vendas
 Table pedidos_venda {
   id int [pk, increment]
   cliente_id int [ref: > entidades.id]
-  data_pedido datetime
+  data_pedido datetime [not null]
   status_id int [ref: > status_pedidos_venda.id]
   condicao_pagamento_id int [ref: > condicoes_pagamento.id]
-  valor_total decimal(10,2)
+  valor_total decimal(10,2) [not null]
 } //-> Tabela de pedidos de venda
 
 Table itens_pedidos_venda {
   id int [pk, increment]
   pedido_id int [ref: > pedidos_venda.id]
   produto_id int [ref: > produtos.codigo]
-  quantidade int
-  preco_unitario decimal(10,2)
+  quantidade int [not null]
+  preco_unitario decimal(10,2) [not null]
   desconto decimal(5,2)
 } //-> Tabela de itens dos pedidos de venda
 
 Table status_pedidos_venda {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de status dos pedidos de venda
 /*
 Tipos de Status dos Pedidos de Venda:
@@ -106,15 +114,15 @@ Tipos de Status dos Pedidos de Venda:
 
 Table tabelas_preco {
   id int [pk, increment]
-  nome varchar
-  vigencia_inicio datetime
-  vigencia_fim datetime
+  nome varchar [not null]
+  vigencia_inicio datetime [not null]
+  vigencia_fim datetime [not null]
   status_id int [ref: > status_tabelas_preco.id]
 } //-> Tabela de tabelas de preço
 
 Table status_tabelas_preco {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de status das tabelas de preço
 /*
 Tipos de Status das Tabelas de Preço:
@@ -128,7 +136,7 @@ Table itens_tabelas_preco {
   id int [pk, increment]
   tabela_id int [ref: > tabelas_preco.id]
   produto_id int [ref: > produtos.codigo]
-  preco decimal(10,2)
+  preco decimal(10,2) [not null]
 } //-> Tabela de itens das tabelas de preço
 
 
@@ -138,22 +146,22 @@ Tabelas de Compras
 Table pedidos_compra {
   id int [pk, increment]
   fornecedor_id int [ref: > entidades.id]
-  data_pedido datetime
+  data_pedido datetime [not null]
   status_id int [ref: > status_pedidos_compra.id]
-  previsao_entrega datetime
+  previsao_entrega datetime [not null]
 } //-> Tabela de pedidos de compra
 
 Table itens_pedidos_compra {
   id int [pk, increment]
   pedido_id int [ref: > pedidos_compra.id]
   produto_id int [ref: > produtos.codigo]
-  quantidade int
-  custo_unitario decimal(10,2)
+  quantidade int [not null]
+  custo_unitario decimal(10,2) [not null]
 } //-> Tabela de itens dos pedidos de compra
 
 Table status_pedidos_compra {
   id int [pk, increment]
-  descricao varchar
+  descricao varchar [not null]
 } //-> Tabela de status dos pedidos de compra
 
 /*===============================================================
@@ -162,31 +170,31 @@ Tabelas de Financeiro comercial
 Table contas_receber {
   id int [pk, increment]
   pedido_venda_id int [ref: > pedidos_venda.id]
-  valor decimal(10,2)
-  vencimento datetime
-  pagamento datetime
+  valor decimal(10,2) [not null]
+  vencimento datetime [not null]
+  pagamento datetime [not null]
 } //-> Tabela de contas a receber
 
 Table contas_pagar {
   id int [pk, increment]
   pedido_compra_id int [ref: > pedidos_compra.id]
-  valor decimal(10,2)
-  vencimento datetime
-  pagamento datetime
+  valor decimal(10,2) [not null]
+  vencimento datetime [not null]
+  pagamento datetime [not null]
 } //-> Tabela de contas a pagar
 
 Table parcelas_receber {
   id int [pk, increment]
   conta_receber_id int [ref: > contas_receber.id]
-  valor decimal(10,2)
-  vencimento datetime
-  pagamento datetime
+  valor decimal(10,2) [not null]
+  vencimento datetime [not null]
+  pagamento datetime [not null]
 } //-> Tabela de parcelas a receber
 
 Table parcelas_pagar {
   id int [pk, increment]
   conta_pagar_id int [ref: > contas_pagar.id]
-  valor decimal(10,2)
-  vencimento datetime
-  pagamento datetime
+  valor decimal(10,2) [not null]
+  vencimento datetime [not null]
+  pagamento datetime [not null]
 } //-> Tabela de parcelas a pagar
