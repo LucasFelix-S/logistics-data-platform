@@ -14,7 +14,6 @@ Table produtos {
   estoque_maximo int
   categoria_id int [ref: > categorias.id]
   status_id int [ref: > status.id]
-  localizador_id int [ref: > localizadores.id]
 } //-> Tabela cadastral dos produtos
 
 Table categorias {
@@ -76,6 +75,7 @@ Tipos de Localizadores:
 Table estoque {
   id int [pk, increment]
   produto_id int [ref: > produtos.codigo]
+  localizador_id int [ref: > localizadores.id]
   quantidade int
   data_entrada datetime
   data_validade datetime
@@ -88,7 +88,8 @@ Table movimentacoes {
   id int [pk, increment]
   produto_id int [ref: > produtos.codigo]
   quantidade int
-  localizador_id int [ref: > localizadores.id]
+  localizador_origem int [ref: > localizadores.id]
+  localizador_destino int [ref: > localizadores.id]
   tipo_movimentacao_id int [ref: > tipos_movimentacoes.id]
   data_movimentacao datetime
 } //-> Tabela de movimentações dos produtos
@@ -186,16 +187,6 @@ Table itens_recebimentos {
   produto_id int [ref: > produtos.codigo]
   quantidade int
 } //-> Tabela de itens dos recebimentos
-
-Table area_de_recebimento {
-  id int [pk, increment]
-  produto_id int [ref: > produtos.codigo]
-  quantidade int
-  localizador_id int [ref: > localizadores.id] // Localizador área de recebimento
-} //-> Tabela de áreas de recebimento
-/*
-Os produtos recebidos são alocados temporariamente em localizadores específicos da área de recebimento antes de serem alocados em seus localizadores definitivos.
-*/
 
 /*===============================================================
 Alocação de Produtos em Localizadores para produtos do recebimento

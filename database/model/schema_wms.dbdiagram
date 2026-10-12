@@ -144,6 +144,30 @@
         "schemaName": "public",
         "x": 2158.780378520133,
         "y": 1639.459034452144
+      },
+      {
+        "name": "expedicoes",
+        "schemaName": "public",
+        "x": 800.2384690745212,
+        "y": 1817.459034452144
+      },
+      {
+        "name": "status_expedicoes",
+        "schemaName": "public",
+        "x": 1083.6100511057712,
+        "y": 1817.459034452144
+      },
+      {
+        "name": "itens_expedicoes",
+        "schemaName": "public",
+        "x": 1321.7335862620212,
+        "y": 1817.459034452144
+      },
+      {
+        "name": "movimentacoes_expedicoes",
+        "schemaName": "public",
+        "x": 1559.1544846995212,
+        "y": 1817.459034452144
       }
     ],
     "tableGroupCollapseStates": [],
@@ -625,6 +649,141 @@
           "movimentacao_id"
         ],
         "secondTableName": "movimentacoes_inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "localizadores",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "localizador_id"
+        ],
+        "secondTableName": "estoque",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "localizadores",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "localizador_origem"
+        ],
+        "secondTableName": "movimentacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "localizadores",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "localizador_destino"
+        ],
+        "secondTableName": "movimentacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "pedidos_saida",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "pedido_id"
+        ],
+        "secondTableName": "expedicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_expedicoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_expedicao_id"
+        ],
+        "secondTableName": "expedicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "expedicoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "expedicao_id"
+        ],
+        "secondTableName": "itens_expedicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_expedicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "expedicoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "expedicao_id"
+        ],
+        "secondTableName": "movimentacoes_expedicoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "movimentacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "movimentacao_id"
+        ],
+        "secondTableName": "movimentacoes_expedicoes",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []
