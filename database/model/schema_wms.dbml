@@ -1,0 +1,151 @@
+/*
+  Schema: WMS (Warehouse Management System)
+  Informação: Todos os comentários adicionados manualmente como mecanismo de referência para a criação da seed para o banco de dados.
+*/
+
+/*=================================================================
+  Tabelas de Cadastro
+===============================================================*/
+Table produtos {
+  codigo int [pk, increment]
+  descricao varchar
+  unidade_medida char(2)
+  categoria_id int [ref: > categorias.id]
+  status_id int [ref: > status.id]
+  localizador_id int [ref: > localizadores.id]
+} //-> Tabela cadastral dos produtos
+
+Table categorias {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de categorias dos produtos
+/*
+Tipos de categoria:
+1 - Bebida
+2 - Medicamento
+3 - Alimento
+4 - Produto de Limpeza
+5 - Higiene Pessoal
+6 - Material de Escritório
+7 - Material de Construção
+8 - Eletrônico
+9 - Vestuário
+10 - Calçados 
+*/
+
+Table status {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos produtos
+/*
+Tipos de Status:
+1 - Ativo
+2 - Inativo
+3 - Bloqueado
+*/
+
+Table localizadores {
+  id int [pk, increment]
+  descricao varchar
+  corredor varchar
+  modulo varchar
+  nivel varchar
+  tipo_localizador_id int [ref: > tipos_localizadores.id]
+} //-> Tabela de localizadores
+/*
+Exemplos de localizadores
+Corredor: A, Módulo: 01, Nível: 01, Tipo: Pallet, Descricao: A0101
+*/
+
+Table tipos_localizadores {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de tipos de localizadores
+/*
+Tipos de Localizadores:
+1 - Pallet
+2 - Picking
+*/
+
+/*=================================================================
+  Tabela de Estoque
+===============================================================*/
+Table estoque {
+  id int [pk, increment]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+  data_entrada datetime
+  data_validade datetime
+} //-> Tabela de estoque dos produtos
+
+/*=================================================================
+  Tabelas de Movimentações
+===============================================================*/
+Table movimentacoes {
+  id int [pk, increment]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+  localizador_id int [ref: > localizadores.id]
+  tipo_movimentacao_id int [ref: > tipos_movimentacoes.id]
+  data_movimentacao datetime
+} //-> Tabela de movimentações dos produtos
+
+Table tipos_movimentacoes {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de tipos de movimentações
+/*
+Tipos de Movimentações:
+1 - Entrada
+2 - Saída
+*/
+
+/*===============================================================
+Tabelas de Entidades
+===============================================================*/
+Table entidades {
+  id int [pk, increment]
+  nome varchar
+  tipo_entidade_id int [ref: > tipos_entidades.id]
+} //-> Tabela de entidades (clientes, fornecedores, transportadoras)
+
+Table tipos_entidades {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de tipos de entidades
+
+/*===============================================================
+Tabelas de Pedidos de Saída
+===============================================================*/
+Table pedidos_saida {
+  id int [pk, increment]
+  data_pedido datetime
+  entidade_id int [ref: > entidades.id]
+  status_pedido_id int [ref: > status_pedidos.id]
+} //-> Tabela de pedidos
+
+Table status_pedidos {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos pedidos
+/*
+Tipos de Status dos Pedidos:
+1 - Pendente
+2 - Em Processamento
+3 - Concluído
+4 - Cancelado
+*/
+
+Table itens_pedidos {
+  id int [pk, increment]
+  pedido_id int [ref: > pedidos_saida.id]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+} //-> Tabela de itens dos pedidos
+
+Table movimentacoes_pedidos {
+  id int [pk, increment]
+  pedido_id int [ref: > pedidos_saida.id]
+  movimentacao_id int [ref: > movimentacoes.id]
+} //-> Tabela de movimentações relacionadas aos pedidos
+

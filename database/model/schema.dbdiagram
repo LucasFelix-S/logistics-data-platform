@@ -1,0 +1,77 @@
+{
+  "version": "3.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "All",
+    "tablePositions": [
+      {
+        "name": "produtos",
+        "schemaName": "public",
+        "x": 283.12812539536964,
+        "y": -172.5393893387315
+      },
+      {
+        "name": "categorias",
+        "schemaName": "public",
+        "x": -11.06742366734143,
+        "y": -172.5393893387315
+      },
+      {
+        "name": "status",
+        "schemaName": "public",
+        "x": -11.06742366734143,
+        "y": -44.539389338731496
+      },
+      {
+        "name": "localizadores",
+        "schemaName": "public",
+        "x": 564.6112154447115,
+        "y": -428.54030132422395
+      },
+      {
+        "name": "tipos_localizadores",
+        "schemaName": "public",
+        "x": 847.3702713815788,
+        "y": -428.54030132422395
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "cd"
+        ],
+        "firstTableName": "products",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "inventory_balances",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "warehouses",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "warehouse_id"
+        ],
+        "secondTableName": "inventory_balances",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}
