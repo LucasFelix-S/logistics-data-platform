@@ -6,17 +6,22 @@
 /*=================================================================
   Tabelas de Cadastro
 ===============================================================*/
-Table produtos {
+Table wms.produtos {
   codigo int [pk, increment]
   descricao varchar [not null]
   unidade_medida char(2) [not null]
   estoque_minimo int
   estoque_maximo int
-  categoria_id int [ref: > categorias.id]
-  status_id int [ref: > status.id]
+  categoria_id int [ref: > wms.categorias.id, not null]
+  status_id int [ref: > wms.status.id, not null]
+  checks {
+    `estoque_minimo IS NULL OR estoque_minimo >= 0` [name: 'ck_wms_produto_estoque_minimo']
+    `estoque_maximo IS NULL OR estoque_maximo >= 0` [name: 'ck_wms_produto_estoque_maximo']
+    `estoque_minimo IS NULL OR estoque_maximo IS NULL OR estoque_minimo <= estoque_maximo` [name: 'ck_wms_produto_faixa_estoque']
+  }
 } //-> Tabela cadastral dos produtos
 
-Table categorias {
+Table wms.categorias {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de categorias dos produtos
@@ -34,7 +39,7 @@ Tipos de categoria:
 10 - Calçados 
 */
 
-Table status {
+Table wms.status {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos produtos
@@ -45,20 +50,20 @@ Tipos de Status:
 3 - Bloqueado
 */
 
-Table localizadores {
+Table wms.localizadores {
   id int [pk, increment]
   descricao varchar [not null]
   corredor varchar [not null]
   modulo varchar [not null]
   nivel varchar [not null]
-  tipo_localizador_id int [ref: > tipos_localizadores.id]
+  tipo_localizador_id int [ref: > wms.tipos_localizadores.id, not null]
 } //-> Tabela de localizadores
 /*
 Exemplos de localizadores
 Corredor: A, Módulo: 01, Nível: 01, Tipo: Pallet, Descricao: A0101
 */
 
-Table tipos_localizadores {
+Table wms.tipos_localizadores {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de tipos de localizadores
@@ -72,31 +77,41 @@ Tipos de Localizadores:
 /*=================================================================
   Tabela de Estoque
 ===============================================================*/
-Table estoque {
+Table wms.estoque {
   id int [pk, increment]
-  produto_id int [ref: > produtos.codigo]
-  localizador_id int [ref: > localizadores.id]
-  lote varchar [not null]
-  validade date [not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  localizador_id int [ref: > wms.localizadores.id, not null]
+  lote varchar
+  validade date
   quantidade int [not null]
+  indexes {
+    (produto_id, localizador_id, lote) [unique, name: 'uq_wms_estoque_produto_local_lote']
+  }
+  checks {
+    `quantidade >= 0` [name: 'ck_wms_estoque_quantidade_nao_negativa']
+  }
 } //-> Tabela de estoque dos produtos
 
 /*=================================================================
   Tabelas de Movimentações
 ===============================================================*/
-Table movimentacoes {
+Table wms.movimentacoes {
   id int [pk, increment]
-  produto_id int [ref: > produtos.codigo]
-  lote varchar [not null]
-  validade date [not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  lote varchar
+  validade date
   quantidade int [not null]
-  localizador_origem int [ref: > localizadores.id]
-  localizador_destino int [ref: > localizadores.id]
-  tipo_movimentacao_id int [ref: > tipos_movimentacoes.id]
+  localizador_origem int [ref: > wms.localizadores.id]
+  localizador_destino int [ref: > wms.localizadores.id]
+  tipo_movimentacao_id int [ref: > wms.tipos_movimentacoes.id, not null]
   data_movimentacao datetime [not null]
+  checks {
+    `quantidade > 0` [name: 'ck_wms_movimentacao_quantidade_positiva']
+    `localizador_origem IS NULL OR localizador_destino IS NULL OR localizador_origem <> localizador_destino` [name: 'ck_wms_movimentacao_localizadores_distintos']
+  }
 } //-> Tabela de movimentações dos produtos
 
-Table tipos_movimentacoes {
+Table wms.tipos_movimentacoes {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de tipos de movimentações
@@ -115,13 +130,13 @@ Tipos de Movimentações:
 /*===============================================================
 Tabelas de Entidades
 ===============================================================*/
-Table entidades {
+Table wms.entidades {
   id int [pk, increment]
   nome varchar [not null]
-  tipo_entidade_id int [ref: > tipos_entidades.id]
+  tipo_entidade_id int [ref: > wms.tipos_entidades.id, not null]
 } //-> Tabela de entidades (clientes, fornecedores, transportadoras)
 
-Table tipos_entidades {
+Table wms.tipos_entidades {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de tipos de entidades
@@ -135,15 +150,15 @@ Tipos de Entidades:
 /*===============================================================
 Tabelas de Pedidos de Saída
 ===============================================================*/
-Table pedidos_saida {
+Table wms.pedidos_saida {
   id int [pk, increment]
   pedido_venda_erp_id int [not null]
   data_pedido datetime [not null]
-  entidade_id int [ref: > entidades.id]
-  status_pedido_id int [ref: > status_pedidos.id]
-} //-> Tabela de pedidos
+  entidade_id int [not null, ref: > wms.entidades.id]
+  status_pedido_id int [not null, ref: > wms.status_pedidos.id]
+} //-> Tabela de pedidos de saída
 
-Table status_pedidos {
+Table wms.status_pedidos {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos pedidos
@@ -155,30 +170,39 @@ Tipos de Status dos Pedidos:
 4 - Cancelado
 */
 
-Table itens_pedidos {
+Table wms.itens_pedidos {
   id int [pk, increment]
-  pedido_id int [ref: > pedidos_saida.id]
-  produto_id int [ref: > produtos.codigo]
+  pedido_id int [ref: > wms.pedidos_saida.id, not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
   quantidade int [not null]
+  indexes {
+    (pedido_id, produto_id) [unique, name: 'uq_wms_pedido_produto']
+  }
+  checks {
+    `quantidade > 0` [name: 'ck_wms_item_pedido_quantidade']
+  }
 } //-> Tabela de itens dos pedidos
 
-Table movimentacoes_pedidos {
+Table wms.movimentacoes_pedidos {
   id int [pk, increment]
-  pedido_id int [ref: > pedidos_saida.id]
-  movimentacao_id int [ref: > movimentacoes.id]
+  pedido_id int [ref: > wms.pedidos_saida.id, not null]
+  movimentacao_id int [ref: > wms.movimentacoes.id, not null]
+  indexes {
+    (pedido_id, movimentacao_id) [unique, name: 'uq_wms_mov_pedido']
+  }
 } //-> Tabela de movimentações relacionadas aos pedidos
 
 /*===============================================================
 Tabelas de Recebimento de Produtos
 ===============================================================*/
-Table recebimentos {
+Table wms.recebimentos {
   id int [pk, increment]
   data_recebimento datetime [not null]
-  entidade_id int [ref: > entidades.id] 
-  status_recebimento_id int [ref: > status_recebimentos.id]
+  entidade_id int [ref: > wms.entidades.id] 
+  status_recebimento_id int [ref: > wms.status_recebimentos.id, not null]
 } //-> Tabela de recebimentos
 
-Table status_recebimentos {
+Table wms.status_recebimentos {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos recebimentos
@@ -190,46 +214,56 @@ Tipos de Status dos Recebimentos:
 4 - Cancelado
 */
 
-Table itens_recebimentos {
+Table wms.itens_recebimentos {
   id int [pk, increment]
-  recebimento_id int [ref: > recebimentos.id]
-  produto_id int [ref: > produtos.codigo]
-  lote varchar [not null]
-  validade date [not null]
+  recebimento_id int [ref: > wms.recebimentos.id, not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  lote varchar
+  validade date
   quantidade_esperada int [not null]
   quantidade_confirmada int [not null]
+  checks {
+    `quantidade_esperada >= 0` [name: 'ck_wms_recebimento_qtd_esperada']
+    `quantidade_confirmada >= 0` [name: 'ck_wms_recebimento_qtd_confirmada']
+  }
 } //-> Tabela de itens dos recebimentos
 
 /*===============================================================
 Alocação de Produtos em Localizadores para produtos do recebimento
 ===============================================================*/
-Table alocacoes {
+Table wms.alocacoes {
   id int [pk, increment]
-  recebimento_id int [ref: > recebimentos.id]
-  produto_id int [ref: > produtos.codigo]
-  localizador_id int [ref: > localizadores.id]
-  lote varchar [not null]
-  validade date [not null]
+  recebimento_id int [ref: > wms.recebimentos.id, not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  localizador_id int [ref: > wms.localizadores.id, not null]
+  lote varchar
+  validade date
   quantidade int [not null]
+  checks {
+    `quantidade > 0` [name: 'ck_wms_alocacao_quantidade']
+  }
 } //-> Tabela de alocação de produtos em localizadores
 
-Table movimentacoes_alocacoes {
+Table wms.movimentacoes_alocacoes {
   id int [pk, increment]
-  alocacao_id int [ref: > alocacoes.id]
-  movimentacao_id int [ref: > movimentacoes.id]
+  alocacao_id int [ref: > wms.alocacoes.id, not null]
+  movimentacao_id int [ref: > wms.movimentacoes.id, not null]
+  indexes {
+    (alocacao_id, movimentacao_id) [unique, name: 'uq_wms_mov_alocacao']
+  }
 } //-> Tabela de movimentações relacionadas às alocações
 
 /*===============================================================
 Tabelas de Expedição
 ===============================================================*/
-Table expedicoes {
+Table wms.expedicoes {
   id int [pk, increment]
   data_expedicao datetime [not null]
-  pedido_id int [ref: > pedidos_saida.id]
-  status_expedicao_id int [ref: > status_expedicoes.id]
+  pedido_id int [ref: > wms.pedidos_saida.id, not null]
+  status_expedicao_id int [ref: > wms.status_expedicoes.id, not null]
 } //-> Tabela de expedições
 
-Table status_expedicoes {
+Table wms.status_expedicoes {
   id int [pk, increment] 
   descricao varchar [not null]
 } //-> Tabela de status das expedições
@@ -241,32 +275,39 @@ Tipos de Status das Expedições:
 4 - Cancelado 
 */
 
-Table itens_expedicoes {
+Table wms.itens_expedicoes {
   id int [pk, increment]
-  expedicao_id int [ref: > expedicoes.id]
-  produto_id int [ref: > produtos.codigo]
-  lote varchar [not null]
-  validade date [not null]
+  expedicao_id int [ref: > wms.expedicoes.id, not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  lote varchar
+  validade date
   quantidade_esperada int [not null]
   quantidade_confirmada int [not null]
+  checks {
+    `quantidade_esperada >= 0` [name: 'ck_wms_expedicao_qtd_esperada']
+    `quantidade_confirmada >= 0` [name: 'ck_wms_expedicao_qtd_confirmada']
+  }
 } //-> Tabela de itens das expedições
 
-Table movimentacoes_expedicoes {
+Table wms.movimentacoes_expedicoes {
   id int [pk, increment]
-  expedicao_id int [ref: > expedicoes.id]
-  movimentacao_id int [ref: > movimentacoes.id]
+  expedicao_id int [ref: > wms.expedicoes.id, not null]
+  movimentacao_id int [ref: > wms.movimentacoes.id, not null]
+  indexes {
+    (expedicao_id, movimentacao_id) [unique, name: 'uq_wms_mov_expedicao']
+  }
 } //-> Tabela de movimentações relacionadas às expedições
 
 /*===============================================================
 Tabelas de Inventário
 ===============================================================*/
-Table inventarios {
+Table wms.inventarios {
   id int [pk, increment]
   data_inventario datetime [not null]
-  status_inventario_id int [ref: > status_inventarios.id]
+  status_inventario_id int [ref: > wms.status_inventarios.id, not null]
 } //-> Tabela de inventários
 
-Table status_inventarios {
+Table wms.status_inventarios {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos inventários
@@ -278,19 +319,28 @@ Tipos de Status dos Inventários:
 4 - Cancelado
 */
 
-Table itens_inventarios {
+Table wms.itens_inventarios {
   id int [pk, increment]
-  inventario_id int [ref: > inventarios.id]
-  produto_id int [ref: > produtos.codigo]
-  localizador_id int [ref: > localizadores.id]
-  lote varchar [not null]
-  validade date [not null]
+  inventario_id int [ref: > wms.inventarios.id, not null]
+  produto_id int [ref: > wms.produtos.codigo, not null]
+  localizador_id int [ref: > wms.localizadores.id, not null]
+  lote varchar
+  validade date
   quantidade_congelada int [not null]
   quantidade_contada int [not null]
+  checks {
+    `quantidade_congelada >= 0` [name: 'ck_wms_inventario_qtd_congelada']
+    `quantidade_contada >= 0` [name: 'ck_wms_inventario_qtd_contada']
+  }
 } //-> Tabela de itens dos inventários
 
-Table movimentacoes_inventarios {
+Table wms.movimentacoes_inventarios {
   id int [pk, increment]
-  inventario_id int [ref: > inventarios.id]
-  movimentacao_id int [ref: > movimentacoes.id]
+  inventario_id int [ref: > wms.inventarios.id, not null]
+  movimentacao_id int [ref: > wms.movimentacoes.id, not null]
+  indexes {
+    (inventario_id, movimentacao_id) [unique, name: 'uq_wms_mov_inventario']
+  }
 }
+
+

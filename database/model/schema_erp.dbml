@@ -6,17 +6,17 @@
 /*=================================================================
   Tabelas de Cadastro
 ===============================================================*/
-Table produtos {
+Table erp.produtos {
   codigo int [pk, increment]
   descricao varchar [not null]
   unidade_medida char(2) [not null]
   estoque_minimo int
   estoque_maximo int
-  categoria_id int [ref: > categorias.id] 
-  status_id int [ref: > status.id]
+  categoria_id int [ref: > erp.categorias.id, not null] 
+  status_id int [ref: > erp.status.id, not null]
 } //-> Tabela cadastral dos produtos
 
-Table categorias {
+Table erp.categorias {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de categorias dos produtos
@@ -34,7 +34,7 @@ Tipos de categoria:
 10 - Calçados 
 */
 
-Table status {
+Table erp.status {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos produtos
@@ -45,30 +45,37 @@ Tipos de Status:
 3 - Bloqueado
 */
 
-Table condicoes_pagamento {
+Table erp.condicoes_pagamento {
   id int [pk, increment]
   descricao varchar [not null]
-  prazo int [not null]
 } //-> Tabela de condições de pagamento
 
-Table parcelas_condicoes_pagamento {
+Table erp.parcelas_condicoes_pagamento {
   id int [pk, increment]
-  condicao_pagamento_id int [ref: > condicoes_pagamento.id]
+  condicao_pagamento_id int [ref: > erp.condicoes_pagamento.id, not null]
   numero_parcela int [not null]
-  prazo_dias int
-  percentual decimal(5,2)
+  prazo_dias int [not null]
+  percentual decimal(5,2) [not null]
+  indexes {
+    (condicao_pagamento_id, numero_parcela) [unique, name: 'uq_erp_condicao_numero_parcela']
+  }
+  checks {
+    `numero_parcela > 0` [name: 'ck_erp_condicao_numero_parcela']
+    `prazo_dias >= 0` [name: 'ck_erp_condicao_prazo']
+    `percentual >= 0 AND percentual <= 100` [name: 'ck_erp_condicao_percentual']
+  }
 } //-> Tabela de parcelas das condições de pagamento
 
 /*===============================================================
 Tabelas de Entidades
 ===============================================================*/
-Table entidades {
+Table erp.entidades {
   id int [pk, increment]
   nome varchar [not null]
-  tipo_entidade_id int [ref: > tipos_entidades.id]
+  tipo_entidade_id int [ref: > erp.tipos_entidades.id, not null]
 } //-> Tabela de entidades (clientes, fornecedores, transportadoras)
 
-Table tipos_entidades {
+Table erp.tipos_entidades {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de tipos de entidades
@@ -82,25 +89,33 @@ Tipos de Entidades:
 /*===============================================================
 Tabelas de Vendas
 ===============================================================*/
-Table pedidos_venda {
+Table erp.pedidos_venda {
   id int [pk, increment]
-  cliente_id int [ref: > entidades.id]
+  cliente_id int [ref: > erp.entidades.id, not null]
   data_pedido datetime [not null]
-  status_id int [ref: > status_pedidos_venda.id]
-  condicao_pagamento_id int [ref: > condicoes_pagamento.id]
+  status_id int [ref: > erp.status_pedidos_venda.id, not null]
+  condicao_pagamento_id int [ref: > erp.condicoes_pagamento.id, not null]
   valor_total decimal(10,2) [not null]
+  checks {
+    `valor_total >= 0` [name: 'ck_erp_pedido_venda_valor_total']
+  }
 } //-> Tabela de pedidos de venda
 
-Table itens_pedidos_venda {
+Table erp.itens_pedidos_venda {
   id int [pk, increment]
-  pedido_id int [ref: > pedidos_venda.id]
-  produto_id int [ref: > produtos.codigo]
+  pedido_id int [ref: > erp.pedidos_venda.id, not null]
+  produto_id int [ref: > erp.produtos.codigo, not null]
   quantidade int [not null]
   preco_unitario decimal(10,2) [not null]
   desconto decimal(5,2)
+  checks {
+    `quantidade > 0` [name: 'ck_erp_item_venda_quantidade']
+    `preco_unitario >= 0` [name: 'ck_erp_item_venda_preco']
+    `desconto IS NULL OR (desconto >= 0 AND desconto <= 100)` [name: 'ck_erp_item_venda_desconto_percentual']
+  }
 } //-> Tabela de itens dos pedidos de venda
 
-Table status_pedidos_venda {
+Table erp.status_pedidos_venda {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos pedidos de venda
@@ -112,15 +127,15 @@ Tipos de Status dos Pedidos de Venda:
 4 - Cancelado
 */
 
-Table tabelas_preco {
+Table erp.tabelas_preco {
   id int [pk, increment]
   nome varchar [not null]
   vigencia_inicio datetime [not null]
-  vigencia_fim datetime [not null]
-  status_id int [ref: > status_tabelas_preco.id]
+  vigencia_fim datetime
+  status_id int [ref: > erp.status_tabelas_preco.id, not null]
 } //-> Tabela de tabelas de preço
 
-Table status_tabelas_preco {
+Table erp.status_tabelas_preco {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status das tabelas de preço
@@ -132,34 +147,44 @@ Tipos de Status das Tabelas de Preço:
 4 - Cancelada
 */
 
-Table itens_tabelas_preco {
+Table erp.itens_tabelas_preco {
   id int [pk, increment]
-  tabela_id int [ref: > tabelas_preco.id]
-  produto_id int [ref: > produtos.codigo]
+  tabela_id int [ref: > erp.tabelas_preco.id, not null]
+  produto_id int [ref: > erp.produtos.codigo, not null]
   preco decimal(10,2) [not null]
+  indexes {
+    (tabela_id, produto_id) [unique, name: 'uq_erp_tabela_preco_produto']
+  }
+  checks {
+    `preco >= 0` [name: 'ck_erp_preco_nao_negativo']
+  }
 } //-> Tabela de itens das tabelas de preço
 
 
 /*===============================================================
 Tabelas de Compras
 ===============================================================*/
-Table pedidos_compra {
+Table erp.pedidos_compra {
   id int [pk, increment]
-  fornecedor_id int [ref: > entidades.id]
+  fornecedor_id int [ref: > erp.entidades.id, not null]
   data_pedido datetime [not null]
-  status_id int [ref: > status_pedidos_compra.id]
+  status_id int [ref: > erp.status_pedidos_compra.id, not null]
   previsao_entrega datetime [not null]
 } //-> Tabela de pedidos de compra
 
-Table itens_pedidos_compra {
+Table erp.itens_pedidos_compra {
   id int [pk, increment]
-  pedido_id int [ref: > pedidos_compra.id]
-  produto_id int [ref: > produtos.codigo]
+  pedido_id int [ref: > erp.pedidos_compra.id, not null]
+  produto_id int [ref: > erp.produtos.codigo, not null]
   quantidade int [not null]
   custo_unitario decimal(10,2) [not null]
+  checks {
+    `quantidade > 0` [name: 'ck_erp_item_compra_quantidade']
+    `custo_unitario >= 0` [name: 'ck_erp_item_compra_custo']
+  }
 } //-> Tabela de itens dos pedidos de compra
 
-Table status_pedidos_compra {
+Table erp.status_pedidos_compra {
   id int [pk, increment]
   descricao varchar [not null]
 } //-> Tabela de status dos pedidos de compra
@@ -167,34 +192,54 @@ Table status_pedidos_compra {
 /*===============================================================
 Tabelas de Financeiro comercial
 ===============================================================*/
-Table contas_receber {
+Table erp.contas_receber {
   id int [pk, increment]
-  pedido_venda_id int [ref: > pedidos_venda.id]
+  pedido_venda_id int [ref: > erp.pedidos_venda.id, not null]
   valor decimal(10,2) [not null]
-  vencimento datetime [not null]
-  pagamento datetime [not null]
-} //-> Tabela de contas a receber
+  checks {
+    `valor >= 0` [name: 'ck_erp_contas_receber_valor']
+  }
+} //-> Cabeçalho financeiro a receber; vencimentos e pagamentos ficam nas parcelas
 
-Table contas_pagar {
+Table erp.contas_pagar {
   id int [pk, increment]
-  pedido_compra_id int [ref: > pedidos_compra.id]
+  pedido_compra_id int [ref: > erp.pedidos_compra.id, not null]
   valor decimal(10,2) [not null]
-  vencimento datetime [not null]
-  pagamento datetime [not null]
-} //-> Tabela de contas a pagar
+  checks {
+    `valor >= 0` [name: 'ck_erp_contas_pagar_valor']
+  }
+} //-> Cabeçalho financeiro a pagar; vencimentos e pagamentos ficam nas parcelas
 
-Table parcelas_receber {
+Table erp.parcelas_receber {
   id int [pk, increment]
-  conta_receber_id int [ref: > contas_receber.id]
+  numero_parcela int [not null]
+  conta_receber_id int [ref: > erp.contas_receber.id, not null]
   valor decimal(10,2) [not null]
   vencimento datetime [not null]
-  pagamento datetime [not null]
+  pagamento datetime
+  indexes {
+    (conta_receber_id, numero_parcela) [unique, name: 'uq_erp_parcela_receber_numero']
+  }
+  checks {
+    `numero_parcela > 0` [name: 'ck_erp_parcela_receber_numero_check']
+    `valor >= 0` [name: 'ck_erp_parcela_receber_valor']
+  }
 } //-> Tabela de parcelas a receber
 
-Table parcelas_pagar {
+Table erp.parcelas_pagar {
   id int [pk, increment]
-  conta_pagar_id int [ref: > contas_pagar.id]
+  numero_parcela int [not null]
+  conta_pagar_id int [ref: > erp.contas_pagar.id, not null]
   valor decimal(10,2) [not null]
   vencimento datetime [not null]
-  pagamento datetime [not null]
+  pagamento datetime
+  indexes {
+    (conta_pagar_id, numero_parcela) [unique, name: 'uq_erp_parcela_pagar_numero']
+  }
+  checks {
+    `numero_parcela > 0` [name: 'ck_erp_parcela_pagar_numero_check']
+    `valor >= 0` [name: 'ck_erp_parcela_pagar_valor']
+  }
 } //-> Tabela de parcelas a pagar
+
+

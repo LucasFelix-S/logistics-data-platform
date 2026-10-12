@@ -1,15 +1,437 @@
 {
   "version": "3.0.0",
-  "darkMode": false,
+  "darkMode": true,
   "gridEnabling": false,
   "currentViewName": null,
   "defaultView": {
     "detailLevel": "All",
     "relationshipMode": "All",
-    "tablePositions": [],
+    "tablePositions": [
+      {
+        "name": "produtos",
+        "schemaName": "erp",
+        "x": 525.13134765625,
+        "y": 12
+      },
+      {
+        "name": "categorias",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 12
+      },
+      {
+        "name": "status",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 154
+      },
+      {
+        "name": "condicoes_pagamento",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 296
+      },
+      {
+        "name": "parcelas_condicoes_pagamento",
+        "schemaName": "erp",
+        "x": 525.13134765625,
+        "y": 314
+      },
+      {
+        "name": "entidades",
+        "schemaName": "erp",
+        "x": 525.13134765625,
+        "y": 553
+      },
+      {
+        "name": "tipos_entidades",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 438
+      },
+      {
+        "name": "pedidos_venda",
+        "schemaName": "erp",
+        "x": 1184.76904296875,
+        "y": 53
+      },
+      {
+        "name": "itens_pedidos_venda",
+        "schemaName": "erp",
+        "x": 1737.66455078125,
+        "y": 12
+      },
+      {
+        "name": "status_pedidos_venda",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 580
+      },
+      {
+        "name": "tabelas_preco",
+        "schemaName": "erp",
+        "x": 525.13134765625,
+        "y": 728
+      },
+      {
+        "name": "status_tabelas_preco",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 722
+      },
+      {
+        "name": "itens_tabelas_preco",
+        "schemaName": "erp",
+        "x": 1184.76904296875,
+        "y": 323
+      },
+      {
+        "name": "pedidos_compra",
+        "schemaName": "erp",
+        "x": 1184.76904296875,
+        "y": 529
+      },
+      {
+        "name": "itens_pedidos_compra",
+        "schemaName": "erp",
+        "x": 1737.66455078125,
+        "y": 282
+      },
+      {
+        "name": "status_pedidos_compra",
+        "schemaName": "erp",
+        "x": 12,
+        "y": 864
+      },
+      {
+        "name": "contas_receber",
+        "schemaName": "erp",
+        "x": 1737.66455078125,
+        "y": 520
+      },
+      {
+        "name": "contas_pagar",
+        "schemaName": "erp",
+        "x": 1737.66455078125,
+        "y": 694
+      },
+      {
+        "name": "parcelas_receber",
+        "schemaName": "erp",
+        "x": 2280.5224609375,
+        "y": 12
+      },
+      {
+        "name": "parcelas_pagar",
+        "schemaName": "erp",
+        "x": 2280.5224609375,
+        "y": 282
+      }
+    ],
     "tableGroupCollapseStates": [],
     "stickyNoteLayouts": [],
-    "referencePaths": []
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "categorias",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "categoria_id"
+        ],
+        "secondTableName": "produtos",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_id"
+        ],
+        "secondTableName": "produtos",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "condicoes_pagamento",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "condicao_pagamento_id"
+        ],
+        "secondTableName": "parcelas_condicoes_pagamento",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "tipos_entidades",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "tipo_entidade_id"
+        ],
+        "secondTableName": "entidades",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "entidades",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "cliente_id"
+        ],
+        "secondTableName": "pedidos_venda",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_pedidos_venda",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_id"
+        ],
+        "secondTableName": "pedidos_venda",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "condicoes_pagamento",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "condicao_pagamento_id"
+        ],
+        "secondTableName": "pedidos_venda",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "pedidos_venda",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "pedido_id"
+        ],
+        "secondTableName": "itens_pedidos_venda",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_pedidos_venda",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_tabelas_preco",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_id"
+        ],
+        "secondTableName": "tabelas_preco",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "tabelas_preco",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "tabela_id"
+        ],
+        "secondTableName": "itens_tabelas_preco",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_tabelas_preco",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "entidades",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "fornecedor_id"
+        ],
+        "secondTableName": "pedidos_compra",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_pedidos_compra",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_id"
+        ],
+        "secondTableName": "pedidos_compra",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "pedidos_compra",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "pedido_id"
+        ],
+        "secondTableName": "itens_pedidos_compra",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_pedidos_compra",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "pedidos_venda",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "pedido_venda_id"
+        ],
+        "secondTableName": "contas_receber",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "pedidos_compra",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "pedido_compra_id"
+        ],
+        "secondTableName": "contas_pagar",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "contas_receber",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "conta_receber_id"
+        ],
+        "secondTableName": "parcelas_receber",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "contas_pagar",
+        "firstSchemaName": "erp",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "conta_pagar_id"
+        ],
+        "secondTableName": "parcelas_pagar",
+        "secondSchemaName": "erp",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
   },
   "views": {}
 }
