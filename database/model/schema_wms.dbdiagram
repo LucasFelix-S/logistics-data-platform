@@ -10,8 +10,8 @@
       {
         "name": "produtos",
         "schemaName": "public",
-        "x": 592.3661000893976,
-        "y": -5.06631025484387
+        "x": 758.0055370583693,
+        "y": -181.3636362332128
       },
       {
         "name": "categorias",
@@ -28,56 +28,56 @@
       {
         "name": "localizadores",
         "schemaName": "public",
-        "x": 971.258231045133,
-        "y": -235.57213291164862
+        "x": 1131.528527389105,
+        "y": -417.2118021014833
       },
       {
         "name": "tipos_localizadores",
         "schemaName": "public",
-        "x": 1225.944424158757,
-        "y": -235.57213291164862
+        "x": 1386.2147205027286,
+        "y": -417.2118021014833
       },
       {
         "name": "estoque",
         "schemaName": "public",
-        "x": 597.6251332925226,
-        "y": -235.57213291164862
+        "x": 757.8954296364943,
+        "y": -417.2118021014833
       },
       {
         "name": "movimentacoes",
         "schemaName": "public",
-        "x": 592.3661000893976,
-        "y": 304.3523332379816
+        "x": 752.6363964333693,
+        "y": 122.71266404814696
       },
       {
         "name": "tipos_movimentacoes",
         "schemaName": "public",
-        "x": 947.1573431768107,
-        "y": 304.3523332379816
+        "x": 1107.4276395207826,
+        "y": 122.71266404814696
       },
       {
         "name": "status_pedidos",
         "schemaName": "public",
-        "x": 597.7352407143976,
-        "y": -566.2290933196439
+        "x": 758.0055370583693,
+        "y": -747.8687625094785
       },
       {
         "name": "itens_pedidos",
         "schemaName": "public",
-        "x": 914.4505427541566,
-        "y": -566.2290933196439
+        "x": 1074.7208390981282,
+        "y": -747.8687625094785
       },
       {
         "name": "pedidos_saida",
         "schemaName": "public",
-        "x": 597.7352407143976,
-        "y": -424.55451934834184
+        "x": 758.0055370583693,
+        "y": -606.1941885381765
       },
       {
         "name": "movimentacoes_pedidos",
         "schemaName": "public",
-        "x": 1256.2945665608033,
-        "y": -437.60349326675123
+        "x": 1416.564862904775,
+        "y": -619.2431624565859
       },
       {
         "name": "entidades",
@@ -88,8 +88,56 @@
       {
         "name": "tipos_entidades",
         "schemaName": "public",
-        "x": 625.8259055965605,
-        "y": 578.3523332379816
+        "x": 786.0962019405322,
+        "y": 396.71266404814696
+      },
+      {
+        "name": "recebimentos",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 756.3523332379816
+      },
+      {
+        "name": "status_recebimentos",
+        "schemaName": "public",
+        "x": 825.8198347530322,
+        "y": 574.712664048147
+      },
+      {
+        "name": "itens_recebimentos",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 966.3523332379816
+      },
+      {
+        "name": "alocacoes",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 1176.3523332379816
+      },
+      {
+        "name": "movimentacoes_alocacoes",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 1418.3523332379816
+      },
+      {
+        "name": "inventarios",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 1596.3523332379816
+      },
+      {
+        "name": "status_inventarios",
+        "schemaName": "public",
+        "x": 650.2707298153105,
+        "y": 1596.3523332379816
+      },
+      {
+        "name": "itens_inventarios",
+        "schemaName": "public",
+        "x": 365.2360618465604,
+        "y": 1774.3523332379816
       }
     ],
     "tableGroupCollapseStates": [],
@@ -346,6 +394,201 @@
           "entidade_id"
         ],
         "secondTableName": "pedidos_saida",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "entidades",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "entidade_id"
+        ],
+        "secondTableName": "recebimentos",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_recebimentos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_recebimento_id"
+        ],
+        "secondTableName": "recebimentos",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "recebimentos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recebimento_id"
+        ],
+        "secondTableName": "itens_recebimentos",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_recebimentos",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "recebimentos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "recebimento_id"
+        ],
+        "secondTableName": "alocacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "alocacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "localizadores",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "localizador_id"
+        ],
+        "secondTableName": "alocacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "alocacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "alocacao_id"
+        ],
+        "secondTableName": "movimentacoes_alocacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "movimentacoes",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "movimentacao_id"
+        ],
+        "secondTableName": "movimentacoes_alocacoes",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "status_inventarios",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "status_inventario_id"
+        ],
+        "secondTableName": "inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "inventarios",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "inventario_id"
+        ],
+        "secondTableName": "itens_inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "codigo"
+        ],
+        "firstTableName": "produtos",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "produto_id"
+        ],
+        "secondTableName": "itens_inventarios",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "localizadores",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "localizador_id"
+        ],
+        "secondTableName": "itens_inventarios",
         "secondSchemaName": "public",
         "secondRelation": "*",
         "checkPoints": []

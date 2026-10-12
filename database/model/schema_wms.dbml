@@ -10,6 +10,8 @@ Table produtos {
   codigo int [pk, increment]
   descricao varchar
   unidade_medida char(2)
+  estoque_minimo int
+  estoque_maximo int
   categoria_id int [ref: > categorias.id]
   status_id int [ref: > status.id]
   localizador_id int [ref: > localizadores.id]
@@ -149,3 +151,77 @@ Table movimentacoes_pedidos {
   movimentacao_id int [ref: > movimentacoes.id]
 } //-> Tabela de movimentações relacionadas aos pedidos
 
+/*===============================================================
+Tabelas de Recebimento de Produtos
+===============================================================*/
+Table recebimentos {
+  id int [pk, increment]
+  data_recebimento datetime
+  entidade_id int [ref: > entidades.id]
+  status_recebimento_id int [ref: > status_recebimentos.id]
+} //-> Tabela de recebimentos
+
+Table status_recebimentos {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos recebimentos
+/*
+Tipos de Status dos Recebimentos:
+1 - Pendente
+2 - Em Processamento
+3 - Concluído
+4 - Cancelado
+*/
+
+Table itens_recebimentos {
+  id int [pk, increment]
+  recebimento_id int [ref: > recebimentos.id]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+} //-> Tabela de itens dos recebimentos
+
+/*===============================================================
+Alocação de Produtos em Localizadores para produtos do recebimento
+===============================================================*/
+Table alocacoes {
+  id int [pk, increment]
+  recebimento_id int [ref: > recebimentos.id]
+  produto_id int [ref: > produtos.codigo]
+  localizador_id int [ref: > localizadores.id]
+  quantidade int
+} //-> Tabela de alocação de produtos em localizadores
+
+Table movimentacoes_alocacoes {
+  id int [pk, increment]
+  alocacao_id int [ref: > alocacoes.id]
+  movimentacao_id int [ref: > movimentacoes.id]
+} //-> Tabela de movimentações relacionadas às alocações
+
+/*===============================================================
+Tabelas de Inventário
+===============================================================*/
+Table inventarios {
+  id int [pk, increment]
+  data_inventario datetime
+  status_inventario_id int [ref: > status_inventarios.id]
+} //-> Tabela de inventários
+
+Table status_inventarios {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos inventários
+/*
+Tipos de Status dos Inventários:
+1 - Pendente
+2 - Em Processamento
+3 - Concluído
+4 - Cancelado
+*/
+
+Table itens_inventarios {
+  id int [pk, increment]
+  inventario_id int [ref: > inventarios.id]
+  produto_id int [ref: > produtos.codigo]
+  localizador_id int [ref: > localizadores.id]
+  quantidade_contada int
+} //-> Tabela de itens dos inventários
