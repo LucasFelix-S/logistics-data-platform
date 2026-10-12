@@ -76,9 +76,9 @@ Table estoque {
   id int [pk, increment]
   produto_id int [ref: > produtos.codigo]
   localizador_id int [ref: > localizadores.id]
+  lote varchar
+  validade date
   quantidade int
-  data_entrada datetime
-  data_validade datetime
 } //-> Tabela de estoque dos produtos
 
 /*=================================================================
@@ -87,6 +87,8 @@ Table estoque {
 Table movimentacoes {
   id int [pk, increment]
   produto_id int [ref: > produtos.codigo]
+  lote varchar
+  validade date
   quantidade int
   localizador_origem int [ref: > localizadores.id]
   localizador_destino int [ref: > localizadores.id]
@@ -123,12 +125,19 @@ Table tipos_entidades {
   id int [pk, increment]
   descricao varchar
 } //-> Tabela de tipos de entidades
+/*
+Tipos de Entidades:
+1 - Cliente
+2 - Fornecedor
+3 - Transportadora
+*/
 
 /*===============================================================
 Tabelas de Pedidos de Saída
 ===============================================================*/
 Table pedidos_saida {
   id int [pk, increment]
+  pedido_venda_erp_id int
   data_pedido datetime
   entidade_id int [ref: > entidades.id]
   status_pedido_id int [ref: > status_pedidos.id]
@@ -185,7 +194,10 @@ Table itens_recebimentos {
   id int [pk, increment]
   recebimento_id int [ref: > recebimentos.id]
   produto_id int [ref: > produtos.codigo]
-  quantidade int
+  lote varchar
+  validade date
+  quantidade_esperada int
+  quantidade_confirmada int
 } //-> Tabela de itens dos recebimentos
 
 /*===============================================================
@@ -196,6 +208,8 @@ Table alocacoes {
   recebimento_id int [ref: > recebimentos.id]
   produto_id int [ref: > produtos.codigo]
   localizador_id int [ref: > localizadores.id]
+  lote varchar
+  validade date
   quantidade int
 } //-> Tabela de alocação de produtos em localizadores
 
@@ -231,7 +245,10 @@ Table itens_expedicoes {
   id int [pk, increment]
   expedicao_id int [ref: > expedicoes.id]
   produto_id int [ref: > produtos.codigo]
-  quantidade int
+  lote varchar
+  validade date
+  quantidade_esperada int
+  quantidade_confirmada int
 } //-> Tabela de itens das expedições
 
 Table movimentacoes_expedicoes {
@@ -266,6 +283,9 @@ Table itens_inventarios {
   inventario_id int [ref: > inventarios.id]
   produto_id int [ref: > produtos.codigo]
   localizador_id int [ref: > localizadores.id]
+  lote varchar
+  validade date
+  quantidade_congelada int
   quantidade_contada int
 } //-> Tabela de itens dos inventários
 

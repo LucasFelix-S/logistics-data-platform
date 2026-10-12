@@ -1,0 +1,192 @@
+/*
+  Schema: ERP (Enterprise Resource Planning.)
+  Informação: Todos os comentários adicionados manualmente como mecanismo de referência para a criação da seed para o banco de dados.
+*/
+
+/*=================================================================
+  Tabelas de Cadastro
+===============================================================*/
+Table produtos {
+  codigo int [pk, increment]
+  descricao varchar
+  unidade_medida char(2)
+  estoque_minimo int
+  estoque_maximo int
+  categoria_id int [ref: > categorias.id]
+  status_id int [ref: > status.id]
+} //-> Tabela cadastral dos produtos
+
+Table categorias {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de categorias dos produtos
+/*
+Tipos de categoria:
+1 - Bebida
+2 - Medicamento
+3 - Alimento
+4 - Produto de Limpeza
+5 - Higiene Pessoal
+6 - Material de Escritório
+7 - Material de Construção
+8 - Eletrônico
+9 - Vestuário
+10 - Calçados 
+*/
+
+Table status {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos produtos
+/*
+Tipos de Status:
+1 - Ativo
+2 - Inativo
+3 - Bloqueado
+*/
+
+Table condicoes_pagamento {
+  id int [pk, increment]
+  descricao varchar
+  prazo int
+} //-> Tabela de condições de pagamento
+
+/*===============================================================
+Tabelas de Entidades
+===============================================================*/
+Table entidades {
+  id int [pk, increment]
+  nome varchar
+  tipo_entidade_id int [ref: > tipos_entidades.id]
+} //-> Tabela de entidades (clientes, fornecedores, transportadoras)
+
+Table tipos_entidades {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de tipos de entidades
+/*
+Tipos de Entidades:
+1 - Cliente
+2 - Fornecedor
+3 - Transportadora
+*/
+
+/*===============================================================
+Tabelas de Vendas
+===============================================================*/
+Table pedidos_venda {
+  id int [pk, increment]
+  cliente_id int [ref: > entidades.id]
+  data_pedido datetime
+  status_id int [ref: > status_pedidos_venda.id]
+  condicao_pagamento_id int [ref: > condicoes_pagamento.id]
+  valor_total decimal(10,2)
+} //-> Tabela de pedidos de venda
+
+Table itens_pedidos_venda {
+  id int [pk, increment]
+  pedido_id int [ref: > pedidos_venda.id]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+  preco_unitario decimal(10,2)
+  desconto decimal(5,2)
+} //-> Tabela de itens dos pedidos de venda
+
+Table status_pedidos_venda {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos pedidos de venda
+/*
+Tipos de Status dos Pedidos de Venda:
+1 - Aberto
+2 - Aprovado
+3 - Faturado
+4 - Cancelado
+*/
+
+Table tabelas_preco {
+  id int [pk, increment]
+  nome varchar
+  vigencia_inicio datetime
+  vigencia_fim datetime
+  status_id int [ref: > status_tabelas_preco.id]
+} //-> Tabela de tabelas de preço
+
+Table status_tabelas_preco {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status das tabelas de preço
+/*
+Tipos de Status das Tabelas de Preço:
+1 - Ativa
+2 - Inativa
+3 - Expirada
+4 - Cancelada
+*/
+
+Table itens_tabelas_preco {
+  id int [pk, increment]
+  tabela_id int [ref: > tabelas_preco.id]
+  produto_id int [ref: > produtos.codigo]
+  preco decimal(10,2)
+} //-> Tabela de itens das tabelas de preço
+
+
+/*===============================================================
+Tabelas de Compras
+===============================================================*/
+Table pedidos_compra {
+  id int [pk, increment]
+  fornecedor_id int [ref: > entidades.id]
+  data_pedido datetime
+  status_id int [ref: > status_pedidos_compra.id]
+  previsao_entrega datetime
+} //-> Tabela de pedidos de compra
+
+Table itens_pedidos_compra {
+  id int [pk, increment]
+  pedido_id int [ref: > pedidos_compra.id]
+  produto_id int [ref: > produtos.codigo]
+  quantidade int
+  custo_unitario decimal(10,2)
+} //-> Tabela de itens dos pedidos de compra
+
+Table status_pedidos_compra {
+  id int [pk, increment]
+  descricao varchar
+} //-> Tabela de status dos pedidos de compra
+
+/*===============================================================
+Tabelas de Financeiro comercial
+===============================================================*/
+Table contas_receber {
+  id int [pk, increment]
+  pedido_venda_id int [ref: > pedidos_venda.id]
+  valor decimal(10,2)
+  vencimento datetime
+  pagamento datetime
+} //-> Tabela de contas a receber
+
+Table contas_pagar {
+  id int [pk, increment]
+  pedido_compra_id int [ref: > pedidos_compra.id]
+  valor decimal(10,2)
+  vencimento datetime
+  pagamento datetime
+} //-> Tabela de contas a pagar
+
+Table parcelas_receber {
+  id int [pk, increment]
+  conta_receber_id int [ref: > contas_receber.id]
+  valor decimal(10,2)
+  vencimento datetime
+  pagamento datetime
+} //-> Tabela de parcelas a receber
+
+Table parcelas_pagar {
+  id int [pk, increment]
+  conta_pagar_id int [ref: > contas_pagar.id]
+  valor decimal(10,2)
+  vencimento datetime
+  pagamento datetime
+} //-> Tabela de parcelas a pagar
