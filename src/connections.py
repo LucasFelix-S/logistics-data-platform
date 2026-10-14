@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 
 load_dotenv()
 
-
 def criar_conexao_origem():
     return create_engine(
         "postgresql+psycopg://"
@@ -14,7 +13,6 @@ def criar_conexao_origem():
         f"{os.getenv('DB_PORT')}/"
         f"{os.getenv('DB_NAME')}"
     )
-
 
 def criar_conexao_destino():
     return create_engine(
