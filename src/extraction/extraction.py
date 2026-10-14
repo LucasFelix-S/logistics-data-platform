@@ -1,5 +1,5 @@
 import pandas as pd
-from connections import criar_conexao_origem
+from config.connections import criar_conexao_origem
 
 origem = criar_conexao_origem()
 
