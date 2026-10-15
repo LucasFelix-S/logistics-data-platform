@@ -1,5 +1,8 @@
 import pandas as pd
-from config.connections import criar_conexao_origem
+from pathlib import Path
+from src.config.connections import criar_conexao_origem
+
+DIRETORIO_EXPORTACAO = (Path(__file__).resolve().parents[2] / "data" / "exports")
 
 origem = criar_conexao_origem()
 
@@ -16,10 +19,12 @@ try:
                 A.categoria_id,
                 A.status_id
             FROM erp.produtos A
-        """, origem)
+        """, conexao)
+
+        arquivo_csv = DIRETORIO_EXPORTACAO / "produtos_erp.csv"
 
         dados_produtos.to_csv(
-            "../../data/exports/produtos_erp.csv", 
+            arquivo_csv, 
             index=False, 
             sep=";", 
             encoding="utf-8")
@@ -27,4 +32,4 @@ try:
         #... aqui eu posso seguir com as demais extrações
 
 finally:
-    origem.dispose()
+    conexao.dispose()

@@ -1,24 +1,57 @@
-import psycopg
-from config.connections import criar_conexao_destino
+from pathlib import Path
+from src.config.connections import criar_conexao_psycopg_destino
 
-destino = criar_conexao_destino()
+def carregar_csv(
+    arquivo_csv: Path,
+    tabela_destino: str,
+    colunas: tuple[str, ...],
+) -> None:
+
+    if not arquivo_csv.is_file():
+        raise FileNotFoundError(
+            f"Arquivo não encontrado: {arquivo_csv}"
+        )
+
+    lista_colunas = ", ".join(colunas)
+
+    comando_copy = f"""
+        COPY {tabela_destino} ({lista_colunas})
+        FROM STDIN
+        WITH (
+            FORMAT CSV,
+            HEADER TRUE,
+            DELIMITER ';'
+        )
+    """
+
+    with criar_conexao_psycopg_destino() as conexao:
+        with conexao.cursor() as cursor:
+            with cursor.copy(comando_copy) as copy:
+                with arquivo_csv.open(
+                    "r",
+                    encoding="utf-8",
+                    newline=""
+                ) as arquivo:
+
+                    while bloco := arquivo.read(1024 * 1024):
+                        copy.write(bloco)
+
+    print(
+        f"Carga concluída: {arquivo_csv.name} "
+        f"→ {tabela_destino}"
+    )
 
 
-try:
-    with destino.connect() as conexao:
-        with open("../../data/exports/produtos_erp.csv", "r", encoding="utf-8") as arquivo_csv:
-            cursor = conexao.cursor()
-            cursor.copy_expert(
-                """
-                COPY produtos (codigo, descricao, unidade_medida, estoque_minimo, estoque_maximo, categoria_id, status_id)
-                FROM STDIN WITH CSV HEADER DELIMITER ';'
-                """,
-                arquivo_csv
-            )
-            conexao.commit()
-            print("Dados inseridos com sucesso na tabela produtos do banco de dados destino.")
+if __name__ == "__main__":
 
+    raiz_projeto = Path(__file__).resolve().parents[2]
 
+    arquivo = (raiz_projeto / "data" / "exports" / "produtos_erp.csv")
 
-except Exception as e:
-    print(f"Erro ao conectar ao banco de dados destino e processar a inserção dos dados: {e}")
+    carregar_csv(
+        arquivo_csv=arquivo,
+        tabela_destino="raw.erp_produtos",
+        colunas=("codigo", "descricao", "unidade_medida", "estoque_minimo", "estoque_maximo", "categoria_id", "status_id"),
+    )
+
+    #... aqui eu posso seguir com as demais inserções, sem precisar repetir todo o fluxo que está na função "carregar_csv"
