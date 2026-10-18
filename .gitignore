@@ -2,7 +2,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-
 .venv/
 
 .env
@@ -17,4 +16,4 @@ Thumbs.db
 .vscode/
 .idea/
 
-.data/exports
+data/exports/*.csv
