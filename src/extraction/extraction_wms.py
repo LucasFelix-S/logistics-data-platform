@@ -257,7 +257,7 @@ CONSULTAS_WMS = {
 
 
 try:
-    DIRETORIO_EXPORTACAO = (Path(__file__).resolve().parents[2] / "data" / "exports")
+    DIRETORIO_EXPORTACAO = (Path(__file__).resolve().parents[2] / "data" / "exports" / "wms")
 
     with origem.connect() as conexao:
 

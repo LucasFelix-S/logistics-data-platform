@@ -190,7 +190,7 @@ CONSULTAS_ERP = {
 
 
 try:
-    DIRETORIO_EXPORTACAO = (Path(__file__).resolve().parents[2] / "data" / "exports")
+    DIRETORIO_EXPORTACAO = (Path(__file__).resolve().parents[2] / "data" / "exports" / "erp")
 
     with origem.connect() as conexao:
 
