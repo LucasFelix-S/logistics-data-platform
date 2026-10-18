@@ -47,11 +47,17 @@ if __name__ == "__main__":
     raiz_projeto = Path(__file__).resolve().parents[2]
 
     arquivo = (raiz_projeto / "data" / "exports" / "produtos_erp.csv")
-
     carregar_csv(
         arquivo_csv=arquivo,
         tabela_destino="raw.erp_produtos",
         colunas=("codigo", "descricao", "unidade_medida", "estoque_minimo", "estoque_maximo", "categoria_id", "status_id"),
     )
 
-    #... aqui eu posso seguir com as demais inserções, sem precisar repetir todo o fluxo que está na função "carregar_csv"
+    arquivo = (raiz_projeto / "data" / "exports" / "categorias_erp.csv")
+    carregar_csv(
+        arquivo=arquivo,
+        tabela_destino="raw.erp_categorias",
+        colunas=("id", "descricao"),
+    )
+
+    
