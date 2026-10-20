@@ -16,5 +16,4 @@ Thumbs.db
 .vscode/
 .idea/
 
-data/exports/erp/*.csv
-data/exports/erp/*.csv
+data/exports/
