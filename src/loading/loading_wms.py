@@ -60,8 +60,7 @@ CARGAS_WMS = {
     },
     "movimentacoes_pedidos_wms.csv": {
         "tabela": "wms_movimentacoes_pedidos",
-        "colunas": ("id", "pedido_id", "movimentacao_id",
-        ),
+        "colunas": ("id", "pedido_id", "movimentacao_id",),
     },
     "recebimentos_wms.csv": {
         "tabela": "wms_recebimentos",
@@ -126,12 +125,12 @@ def carregar_csv(
     """Carrega um CSV usando COPY FROM STDIN."""
 
 
-    if not arquivo_csv is file():
+    if not arquivo_csv.is_file():
         raise FileNotFoundError(
             f"Arquivo csv não encontrado: {arquivo_csv}"
         )
 
-    if not colunas():
+    if not colunas:
         raise ValueError(
             f"Nenhuma coluna definida para: {tabela_destino}"
         )
@@ -152,7 +151,7 @@ def carregar_csv(
     ).format(
         sql.Identifier(schema),
         sql.Identifier(nome_tabela),
-        sql.Sql(", ").join(
+        sql.SQL(", ").join(
             sql.Identifier(coluna) for coluna in colunas
         ),
     )
@@ -194,8 +193,8 @@ def executar_carga () -> None:
 
     print(
         f"Carga do WMS concluída: "
-        f"{len(CARGAS_ERP)} tabelas processadas."
+        f"{len(CARGAS_WMS)} tabelas processadas."
     )
 
 if __name__ == "__main__":
-    executar_carga
+    executar_carga()

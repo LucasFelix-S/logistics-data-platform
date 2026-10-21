@@ -1,4 +1,3 @@
-DROP SCHEMA IF EXISTS raw CASCADE;
 CREATE SCHEMA raw;
 
 CREATE TABLE raw.erp_produtos (

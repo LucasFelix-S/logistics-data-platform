@@ -169,4 +169,4 @@ def executar_cargas() -> None:
 
 
 if __name__ == "__main__":
-    executar_cargas()
+    executar_carga()
