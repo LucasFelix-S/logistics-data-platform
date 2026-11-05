@@ -1,0 +1,151 @@
+version: 2
+
+sources:
+  - name: erp
+    schema: raw
+    description: "Tabelas extraídas do sistema ERP."
+    tables:
+      - name: categorias
+        identifier: erp_categorias
+
+      - name: condicoes_pagamento
+        identifier: erp_condicoes_pagamento
+
+      - name: contas_pagar
+        identifier: erp_contas_pagar
+
+      - name: contas_receber
+        identifier: erp_contas_receber
+
+      - name: entidades
+        identifier: erp_entidades
+
+      - name: itens_pedidos_compra
+        identifier: erp_itens_pedidos_compra
+
+      - name: itens_pedidos_venda
+        identifier: erp_itens_pedidos_venda
+
+      - name: itens_tabelas_preco
+        identifier: erp_itens_tabelas_preco
+
+      - name: parcelas_condicoes_pagamento
+        identifier: erp_parcelas_condicoes_pagamento
+
+      - name: parcelas_pagar
+        identifier: erp_parcelas_pagar
+
+      - name: parcelas_receber
+        identifier: erp_parcelas_receber
+
+      - name: pedidos_compra
+        identifier: erp_pedidos_compra
+
+      - name: pedidos_venda
+        identifier: erp_pedidos_venda
+
+      - name: produtos
+        identifier: erp_produtos
+
+      - name: status
+        identifier: erp_status
+
+      - name: status_pedidos_compra
+        identifier: erp_status_pedidos_compra
+
+      - name: status_pedidos_venda
+        identifier: erp_status_pedidos_venda
+
+      - name: status_tabelas_preco
+        identifier: erp_status_tabelas_preco
+
+      - name: tabelas_preco
+        identifier: erp_tabelas_preco
+
+      - name: tipos_entidades
+        identifier: erp_tipos_entidades
+
+  - name: wms
+    schema: raw
+    description: "Tabelas extraídas do sistema WMS."
+    tables:
+      - name: alocacoes
+        identifier: wms_alocacoes
+
+      - name: categorias
+        identifier: wms_categorias
+
+      - name: entidades
+        identifier: wms_entidades
+
+      - name: estoque
+        identifier: wms_estoque
+
+      - name: expedicoes
+        identifier: wms_expedicoes
+
+      - name: inventarios
+        identifier: wms_inventarios
+
+      - name: itens_expedicoes
+        identifier: wms_itens_expedicoes
+
+      - name: itens_inventarios
+        identifier: wms_itens_inventarios
+
+      - name: itens_pedidos
+        identifier: wms_itens_pedidos
+
+      - name: itens_recebimentos
+        identifier: wms_itens_recebimentos
+
+      - name: localizadores
+        identifier: wms_localizadores
+
+      - name: movimentacoes
+        identifier: wms_movimentacoes
+
+      - name: movimentacoes_alocacoes
+        identifier: wms_movimentacoes_alocacoes
+
+      - name: movimentacoes_expedicoes
+        identifier: wms_movimentacoes_expedicoes
+
+      - name: movimentacoes_inventarios
+        identifier: wms_movimentacoes_inventarios
+
+      - name: movimentacoes_pedidos
+        identifier: wms_movimentacoes_pedidos
+
+      - name: pedidos_saida
+        identifier: wms_pedidos_saida
+
+      - name: produtos
+        identifier: wms_produtos
+
+      - name: recebimentos
+        identifier: wms_recebimentos
+
+      - name: status
+        identifier: wms_status
+
+      - name: status_expedicoes
+        identifier: wms_status_expedicoes
+
+      - name: status_inventarios
+        identifier: wms_status_inventarios
+
+      - name: status_pedidos
+        identifier: wms_status_pedidos
+
+      - name: status_recebimentos
+        identifier: wms_status_recebimentos
+
+      - name: tipos_entidades
+        identifier: wms_tipos_entidades
+
+      - name: tipos_localizadores
+        identifier: wms_tipos_localizadores
+
+      - name: tipos_movimentacoes
+        identifier: wms_tipos_movimentacoes
